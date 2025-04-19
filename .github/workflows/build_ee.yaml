@@ -18,10 +18,7 @@ jobs:
         uses: tj-actions/changed-files@v46.0.5
         with:
           files: |
-            execution-environments/**/bindep.txt
-            execution-environments/**/requirements.yml
-            execution-environments/**/execution-environment.yml
-            execution-environments/**/requirements.txt
+            execution-environments/**/VERSION
 
       - name: Install ansible-builder
         run: |
@@ -35,9 +32,9 @@ jobs:
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             dir=$(dirname "$file")
-            ee_version=$(cat "$dir/VERSION")
+            ee_version=$(sed -n '2p' "$dir/VERSION")
             ee_name=$(basename "$dir")
-            echo "Building execution environment for $dir"
+            echo "Building execution environment for $ee_name version $ee_version"
             ansible-builder build \
               --container-runtime podman \
               --tag "$ee_name:$ee_version" \
