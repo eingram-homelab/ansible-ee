@@ -38,8 +38,7 @@ jobs:
             /home/runner/.local/bin/ansible-builder build \
               --container-runtime podman \
               --tag "$ee_name:$ee_version" \
-              --force \
-              --no-cache \
+              --verbosity 3
               "$dir"
             break
           done
