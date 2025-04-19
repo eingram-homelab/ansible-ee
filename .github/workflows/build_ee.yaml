@@ -1,0 +1,18 @@
+name: Build and Test Ansible Execution Environment
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+job:
+  name: Build and Test
+  runs-on: arc-runners
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install ansible-builder
+      run: |
+        pip3 install ansible-builder
+        
