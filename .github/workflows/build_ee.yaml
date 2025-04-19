@@ -36,7 +36,7 @@ jobs:
             ee_name=$(basename "$dir")
             echo "Building execution environment for $ee_name version $ee_version"
             cd $dir
-            sudo systemctl start docker
+            sudo service docker start
             /home/runner/.local/bin/ansible-builder build \
               --container-runtime docker \
               --tag "$ee_name:$ee_version" \
