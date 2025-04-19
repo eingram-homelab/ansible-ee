@@ -25,7 +25,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-pip
           pip install --upgrade pip
-          pip install ansible-builder
+          pip install ansible-dev-tools
           
       - name: Build Ansible Execution Environment
         if: steps.changed-files.outputs.all_changed_files != ''
@@ -37,7 +37,7 @@ jobs:
             echo "Building execution environment for $ee_name version $ee_version"
             cd $dir
             /home/runner/.local/bin/ansible-builder build \
-              --container-runtime podman \
+              --container-runtime docker \
               --tag "$ee_name:$ee_version" \
               --verbosity 3
             break
