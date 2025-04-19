@@ -1,18 +1,48 @@
 name: Build and Test Ansible Execution Environment
 
 on:
-  pull_request:
-    branches:
-      - develop
+  workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - develop
 
-job:
-  name: Build and Test
-  runs-on: arc-runners
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+jobs:
+  build:
+    runs-on: arc-runners
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install ansible-builder
-      run: |
-        pip3 install ansible-builder
-        
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v46.0.2
+        with:
+          files: |
+            execution-environments/**/bindep.txt
+            execution-environments/**/requirements.yml
+            execution-environments/**/execution-environment.yml
+            execution-environments/**/requirements.txt
+
+      - name: Install ansible-builder
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip install --upgrade pip
+          pip install ansible-builder
+          
+      - name: Build Ansible Execution Environment
+        if: steps.changed-files.outputs.all_changed_files != ''
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            dir=$(dirname "$file")
+            ee_version=$(cat "$dir/VERSION")
+            ee_name=$(basename "$dir")
+            echo "Building execution environment for $dir"
+            ansible-builder build \
+              --container-runtime podman \
+              --tag "$ee_name:$ee_version" \
+              --force \
+              --no-cache \
+              "$dir"
+            break
+          done
