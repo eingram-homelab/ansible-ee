@@ -35,7 +35,7 @@ jobs:
             ee_version=$(sed -n '2p' "$dir/VERSION")
             ee_name=$(basename "$dir")
             echo "Building execution environment for $ee_name version $ee_version"
-            ansible-builder build \
+            /home/runner/.local/bin/ansible-builder build \
               --container-runtime podman \
               --tag "$ee_name:$ee_version" \
               --force \
