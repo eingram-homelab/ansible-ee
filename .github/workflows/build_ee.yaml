@@ -2,9 +2,9 @@ name: Build and Test Ansible Execution Environment
 
 on:
   workflow_dispatch:
-  # pull_request:
-  #   branches:
-  #     - develop
+  push:
+    branches:
+      - main
 
 jobs:
   build:
