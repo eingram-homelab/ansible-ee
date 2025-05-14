@@ -9,7 +9,7 @@ on:
     branches:
       - main
     paths:
-      - execution-environments/homelab_awx/**
+      - execution-environments/homelab_awx/VERSION
 
 jobs:
   build:
