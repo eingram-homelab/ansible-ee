@@ -25,13 +25,18 @@ jobs:
       #     files: |
       #       execution-environments/homelab_awx/VERSION
 
+      - name: Install python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
       - name: Install ansible-builder
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip
           pip install --upgrade pip
           pip install ansible-dev-tools
-      
+
       - name: Install docker
         run: |
           # Add Docker's official GPG key:
