@@ -18,12 +18,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Get changed files
-      #   id: changed-files
-      #   uses: tj-actions/changed-files@v46.0.5
-      #   with:
-      #     files: |
-      #       execution-environments/homelab_awx/VERSION
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v46.0.5
+        with:
+          files: |
+            execution-environments/homelab_awx/VERSION
 
       - name: Install python
         uses: actions/setup-python@v5.6.0
