@@ -64,7 +64,7 @@ jobs:
             echo "Building execution environment for $ee_name version $ee_version"
             cd $dir
             sudo service docker start
-            sudo ansible-builder build \
+            ansible-builder build \
               --container-runtime docker \
               --tag "$ee_name:$ee_version" \
               --verbosity 3
