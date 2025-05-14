@@ -70,3 +70,18 @@ jobs:
               --verbosity 3
             break
           done
+      
+      - name: Tag and push ee image to gitea
+        if: steps.changed-files.outputs.all_changed_files != ''
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            dir=$(dirname "$file")
+            ee_version=$(sed -n '2p' "$dir/VERSION")
+            ee_name=$(basename "$dir")
+            echo "Tagging and pushing execution environment for $ee_name version $ee_version"
+            cd $dir
+            docker login -u eingram -p ${{ secrets.GITEA_PASSWORD }} gitea.local.lan
+            docker tag "$ee_name:$ee_version" "gitea.local.lan/eingram/$ee_name:$ee_version"
+            docker push "gitea.local.lan/eingram/$ee_name:$ee_version"
+            break
+          done
