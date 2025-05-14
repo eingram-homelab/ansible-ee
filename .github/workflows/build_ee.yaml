@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: arc-runners
+    runs-on: gh-runners-vm
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
