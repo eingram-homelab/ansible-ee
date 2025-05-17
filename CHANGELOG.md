@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.6.0] - 2025-05-15
+- Update ansible-core to 2.18.5
+
 ## [1.5.1] - 2024-03-19
 - Add ansible.utils collection
 
