@@ -9,7 +9,7 @@ on:
     branches:
       - main
     paths:
-      - execution-environments/homelab_awx/VERSION
+      - execution-environments/amd64/**VERSION
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
         uses: tj-actions/changed-files@v46.0.5
         with:
           files: |
-            execution-environments/homelab_awx/VERSION
+            execution-environments/amd64/**/VERSION
 
       - name: Install python
         uses: actions/setup-python@v5.6.0
